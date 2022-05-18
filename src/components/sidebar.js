@@ -1,22 +1,23 @@
 import React from "react";
-import Icon from "./Icon";
+import { useNavigate } from 'react-router-dom';
 
+import Icon from "./Icon";
 import { Navigation } from "react-minimal-side-navigation";
 import "../ReactMinimalSideNavigation.css";
 
 function Sidebar() {
+
+  let navigate = useNavigate();
   return (
     <>
       <Navigation
-        // you can use your own router's api to get pathname
-        activeItemId="/management/members"
         onSelect={({ itemId }) => {
-          // maybe push to the route
+          navigate(itemId);
         }}
         items={[
           {
             title: "QUOTY",
-            itemId: "/home",
+            itemId: "/",
             // you can use your own custom Icon component as well
             // icon is optional
             elemBefore: () => <Icon name="home" />,
@@ -37,15 +38,8 @@ function Sidebar() {
             ],
           },
           {
-            title: "Another Item",
-            itemId: "/another",
-            subNav: [
-              {
-                title: "Teams",
-                itemId: "/management/teams",
-                elemBefore: () => <Icon name="teams" />,
-              },
-            ],
+            title: "Database",
+            itemId: "/database",
           },
         ]}
       />

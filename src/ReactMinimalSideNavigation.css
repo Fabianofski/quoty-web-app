@@ -141,7 +141,7 @@
   --tw-text-opacity: 1;
   background-color: #36393f;
   border-color: #ff00c4;
-  color: rgba(31, 41, 55, var(--tw-text-opacity));
+  color: white;
 }
 .table {
   display: table;
