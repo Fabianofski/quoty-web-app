@@ -1,4 +1,5 @@
 import React from "react";
+import Moment from "moment";
 import './Database.css';
 
 function Database(){
@@ -15,26 +16,51 @@ function Database(){
 }
 
 function Table({className, page}){
-  let data = [];
-  for (let i = 0; i < 10; i++) {
-    data.push(<Data start={"20.01.2020 18:05:36"} end={"20.01.2020 20:08:53"} duration={"02:02:17"}/>);
-  }
+  const [data, setData] = React.useState(null);
+
+  React.useEffect(() => {
+    fetch(`/api/latestEntries?database=${className}`)
+    .then(response => response.json())
+    .then(data => {
+      let tableData = [];
+      data.forEach(element => {
+        tableData.push(<Data username={element.UserName} start={element.Start} end={element.End} duration={element.Time}/>);
+      });
+      setData(tableData);
+    })
+  }, []);
+
+  console.log(data);
 
   return(
     <div>
-      <h2>{className}</h2>  
+      <h2>{className}</h2>
       <table className="table">
-        {data}
+        <tbody>
+          <tr>
+            <td>username</td>
+            <td>start</td>
+            <td>end</td>
+            <td>duration</td>
+          </tr>
+        </tbody>
+      </table>  
+      <table className="table">
+        <tbody>
+          {data}
+        </tbody>
       </table>
     </div>   
   );
 }
 
-function Data({start, end, duration}){
+function Data({username, start, end, duration}){
+  Moment.locale('de');
   return(
     <tr>
-      <td>{start}</td>
-      <td>{end}</td>
+      <td>{username}</td>
+      <td>{Moment(start).format('DD.MM.yyyy HH:mm:ss')}</td>
+      <td>{Moment(end).format('DD.MM.yyyy HH:mm:ss')}</td>
       <td>{duration}</td>
     </tr>
   );

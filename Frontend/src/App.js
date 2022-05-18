@@ -11,20 +11,12 @@ const Account = () => <p>AccountContent</p>;
 const NotFound = () => <p>404 not found</p>;
 
 function App(){
-  const [data, setData] = React.useState(null);
-
-  React.useEffect(() => {
-    fetch("/api")
-      .then((res) => res.json())
-      .then((data) => setData(data.message));
-      console.log(data);
-  }, []);
 
   return (
     <BrowserRouter>
       <div className="App">
         <div className="header">
-          <h3>QUOTY - WEB - APP (WORK IN PROGRESS) {!data ? "Loading..." : data}</h3>
+          <h3>QUOTY - WEB - APP (WORK IN PROGRESS)</h3>
         </div>
 
         <div className="body">
