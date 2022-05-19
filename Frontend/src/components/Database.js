@@ -19,9 +19,10 @@ function Table({className, page}){
   const [data, setData] = React.useState(null);
 
   React.useEffect(() => {
-    fetch(`/api/latestEntries?database=${className}`)
+    fetch(`https://us-central1-quoty-bot.cloudfunctions.net/app/api/latestEntries?database=${className}`)
     .then(response => response.json())
     .then(data => {
+      console.log(data);
       let tableData = [];
       data.forEach(element => {
         tableData.push(<Data username={element.UserName} start={element.Start} end={element.End} duration={element.Time}/>);
