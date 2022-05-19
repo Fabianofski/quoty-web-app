@@ -1,10 +1,10 @@
 const express = require("express");
-var mysql = require('mysql');
+const mysql = require('mysql');
 
 const PORT = process.env.PORT || 3001;
 const app = express();
 
-var con = mysql.createConnection({
+const con = mysql.createConnection({
   host:"quoty-bot.cowcx6ea0nka.us-east-2.rds.amazonaws.com",
   user:"admin",
   password:"5U4YW*d$Gb#D&JRX",
@@ -18,15 +18,17 @@ con.connect(function(err) {
 
 app.get("/api/latestEntries", (req, res) => {
   
-  let database = req.query.database || "Voicetime";
-  let numberOfEntries = parseInt(req.query.numberOfEntries) ? parseInt(req.query.numberOfEntries) : 10;
-  getLatestEntriesFromDatabase(database, numberOfEntries, function(result){
+  const database = req.query.database || "Voicetime";
+  const numberOfEntries = parseInt(req.query.numberOfEntries) ? parseInt(req.query.numberOfEntries) : 10;
+  const page = (parseInt(req.query.page) ? parseInt(req.query.page) : 1) - 1;
+
+  getLatestEntriesFromDatabase(database, numberOfEntries, page, function(result){
       res.json(result); 
   })
 });
 
-function getLatestEntriesFromDatabase(database, numberOfEntries, callback){
-  con.query(`SELECT * FROM ${database} ORDER BY Start DESC LIMIT ${numberOfEntries}`, function(err, result){
+function getLatestEntriesFromDatabase(database, numberOfEntries, page, callback){
+  con.query(`SELECT * FROM ${database} ORDER BY Start DESC LIMIT ${numberOfEntries * page}, ${numberOfEntries}`, function(err, result){
     if (err) throw err;
     return callback(result);
   });

@@ -29,23 +29,18 @@ function Table({className, page}){
       setData(tableData);
     })
   }, []);
-
   console.log(data);
 
   return(
     <div>
-      <h2>{className}</h2>
-      <table className="table">
-        <tbody>
-          <tr>
-            <td>username</td>
-            <td>start</td>
-            <td>end</td>
-            <td>duration</td>
-          </tr>
-        </tbody>
-      </table>  
-      <table className="table">
+      <h2>{className}</h2> 
+      <table>
+        <tr className="headerTable">
+          <td>USER</td>
+          <td>START</td>
+          <td>END</td>
+          <td>DURATION</td>
+        </tr>
         <tbody>
           {data}
         </tbody>
