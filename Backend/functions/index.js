@@ -3,7 +3,7 @@ const functions = require("firebase-functions");
 const express = require("express");
 const mysql = require('mysql');
 
-const PORT = 3128;
+const PORT = 3001; // npx kill-port 3001 (to kill process on port after firebase deploy)
 const app = express();
 
 const con = mysql.createConnection({

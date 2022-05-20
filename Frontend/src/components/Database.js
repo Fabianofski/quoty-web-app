@@ -19,29 +19,34 @@ function Table({className, page}){
   const [data, setData] = React.useState(null);
 
   React.useEffect(() => {
-    fetch(`https://us-central1-quoty-bot.cloudfunctions.net/app/api/latestEntries?database=${className}`)
-    .then(response => response.json())
+    fetch(`/api/latestEntries?database=${className}`)
+    .then(response => { 
+      if(response.ok) 
+        return response.json();
+      else throw response;
+    })
     .then(data => {
       console.log(data);
-      let tableData = [];
-      data.forEach(element => {
-        tableData.push(<Data username={element.UserName} start={element.Start} end={element.End} duration={element.Time}/>);
-      });
-      setData(tableData);
-    })
+      // let tableData = [];
+      // data.forEach(element => {
+      //   tableData.push(<Data username={element.UserName} start={element.Start} end={element.End} duration={element.Time}/>);
+      // });
+      // setData(tableData);
+    }). catch(error => {console.error(`${error} Error when fetching ${data}`)})
   }, []);
-  console.log(data);
 
   return(
     <div>
       <h2>{className}</h2> 
       <table>
-        <tr className="headerTable">
-          <td>USER</td>
-          <td>START</td>
-          <td>END</td>
-          <td>DURATION</td>
-        </tr>
+        <thead>
+          <tr className="headerTable">
+            <td>USER</td>
+            <td>START</td>
+            <td>END</td>
+            <td>DURATION</td>
+          </tr>
+        </thead>
         <tbody>
           {data}
         </tbody>

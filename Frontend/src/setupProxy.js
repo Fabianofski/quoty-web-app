@@ -5,7 +5,7 @@ module.exports = function(app) {
   app.use(
     '/api',
     createProxyMiddleware({
-      target: '85.214.250.48:3128',
+      target: 'https://us-central1-quoty-bot.cloudfunctions.net/app',
       changeOrigin: true,
     })
   );
