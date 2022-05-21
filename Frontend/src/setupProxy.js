@@ -7,6 +7,7 @@ module.exports = function(app) {
     createProxyMiddleware({
       target: 'https://us-central1-quoty-bot.cloudfunctions.net/app',
       changeOrigin: true,
+      secure: false
     })
   );
 };

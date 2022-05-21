@@ -18,8 +18,6 @@ function Sidebar() {
           {
             title: "QUOTY",
             itemId: "/",
-            // you can use your own custom Icon component as well
-            // icon is optional
             elemBefore: () => <Icon name="home" />,
           },
           {

@@ -4,6 +4,7 @@
   border-style: solid;
   border-width: 0;
   box-sizing: border-box;
+  border-radius: 50px;
 }
 .side-navigation-panel ul {
   list-style-type: none;
@@ -16,7 +17,7 @@
   .side-navigation-panel-select-option {
   --tw-text-opacity: 1;
   align-items: center;
-  border-left-width: 2px;
+  background-color: #2f3136;
   color: white;
   cursor: pointer;
   display: flex;
@@ -38,8 +39,7 @@
   --tw-border-opacity: 1;
   --tw-bg-opacity: 1;
   --tw-text-opacity: 1;
-  background-color: #36393f;
-  border-color: #ff00c4;
+  box-shadow: inset 2px 2px 4px 4px #ff00c4;
   color: white;
 }
 .side-navigation-panel
@@ -80,8 +80,7 @@
   --tw-border-opacity: 1;
   --tw-bg-opacity: 1;
   --tw-text-opacity: 1;
-  background-color: #36393f;
-  border-color: #ff00c4;
+  background-color: #ff00c4;
   color: white;
 }
 .side-navigation-panel
@@ -91,7 +90,7 @@
   .side-navigation-panel-select-inner-option {
   --tw-text-opacity: 1;
   align-items: center;
-  border-left-width: 2px;
+  border: 2px;
   color: white;
   cursor: pointer;
   display: flex;
@@ -106,7 +105,6 @@
   --tw-border-opacity: 1;
   --tw-bg-opacity: 1;
   --tw-text-opacity: 1;
-  background-color: #36393f;
   border-color: #ff00c4;
   color: white;
 }
@@ -139,8 +137,7 @@
   --tw-border-opacity: 1;
   --tw-bg-opacity: 1;
   --tw-text-opacity: 1;
-  background-color: #36393f;
-  border-color: #ff00c4;
+  background-color: #ff00c4;
   color: white;
 }
 .table {

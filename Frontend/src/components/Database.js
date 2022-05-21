@@ -19,20 +19,17 @@ function Table({className, page}){
   const [data, setData] = React.useState(null);
 
   React.useEffect(() => {
-    fetch(`/api/latestEntries?database=${className}`)
-    .then(response => { 
-      if(response.ok) 
-        return response.json();
-      else throw response;
-    })
-    .then(data => {
-      console.log(data);
-      // let tableData = [];
-      // data.forEach(element => {
-      //   tableData.push(<Data username={element.UserName} start={element.Start} end={element.End} duration={element.Time}/>);
-      // });
-      // setData(tableData);
-    }). catch(error => {console.error(`${error} Error when fetching ${data}`)})
+    const query = `https://us-central1-quoty-bot.cloudfunctions.net/app/api/latestEntries?database=${className}`;
+    fetch(query, {mode:'cors'})
+    .then(response => response.json())
+    .then(fetchedData => {
+      console.log(fetchedData);
+      let tableData = [];
+      fetchedData.forEach(element => {
+        tableData.push(<Data username={element.UserName} start={element.Start} end={element.End} duration={element.Time}/>);
+      });
+      setData(tableData);
+    });
   }, []);
 
   return(
