@@ -41,8 +41,6 @@ function Admin(props) {
   );
   React.useEffect(() => {
     if (navigator.platform.indexOf("Win") > -1) {
-      document.documentElement.className += " perfect-scrollbar-on";
-      document.documentElement.classList.remove("perfect-scrollbar-off");
       ps = new PerfectScrollbar(mainPanelRef.current, {
         suppressScrollX: true,
       });
@@ -60,19 +58,6 @@ function Admin(props) {
       }
     };
   });
-  React.useEffect(() => {
-    if (navigator.platform.indexOf("Win") > -1) {
-      let tables = document.querySelectorAll(".table-responsive");
-      for (let i = 0; i < tables.length; i++) {
-        ps = new PerfectScrollbar(tables[i]);
-      }
-    }
-    document.documentElement.scrollTop = 0;
-    document.scrollingElement.scrollTop = 0;
-    if (mainPanelRef.current) {
-      mainPanelRef.current.scrollTop = 0;
-    }
-  }, [location]);
   // this function opens and closes the sidebar on small devices
   const toggleSidebar = () => {
     document.documentElement.classList.toggle("nav-open");
@@ -109,7 +94,7 @@ function Admin(props) {
             <Sidebar
               routes={routes}
               logo={{
-                link: "/admin/dashboard",
+                outterLink: "/admin/dashboard",
                 text: "Quoty",
                 imgSrc: logo,
               }}
