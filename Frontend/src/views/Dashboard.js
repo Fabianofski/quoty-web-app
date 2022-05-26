@@ -15,41 +15,39 @@
 * The above copyright notice and this permission notice shall be included in all copies or substantial portions of the Software.
 
 */
+
 import React from "react";
-// nodejs library that concatenates classes
-import classNames from "classnames";
-// react plugin used to create charts
-import { Line, Bar } from "react-chartjs-2";
 import TableData from "variables/tableEntries";
+import StateButtonGroup from "components/StateButtonGroup";
 // reactstrap components
-import 
-{
-  Button,
-  ButtonGroup,
+import {
   Card,
   CardHeader,
   CardBody,
   CardTitle,
-  DropdownToggle,
-  DropdownMenu,
-  DropdownItem,
-  UncontrolledDropdown,
-  Label,
-  FormGroup,
-  Input,
   Table,
   Row,
   Col,
-  UncontrolledTooltip,
 } from "reactstrap";
 
 // core components
 import LineGraph from "variables/charts.js";
 
-function Dashboard(props) {
+function Dashboard() {
   const [bigChartState, setbigChartState] = React.useState("Voicetime");
+  const [timeInterval, setTimeInterval] = React.useState("week");
 
   const [bigTableState, setbigTableState] = React.useState("Voicetime");
+
+  const [avatarUrls, setAvatarUrls] = React.useState({});
+  React.useEffect(() => {
+    const query = `https://us-central1-quoty-bot.cloudfunctions.net/app/api/getAllUsers`;
+    fetch(query, {mode:'cors'})
+    .then(response => response.json())
+    .then(fetchedData => {
+      setAvatarUrls(fetchedData);
+    })
+  }, []);
 
   return (
     <>
@@ -59,67 +57,15 @@ function Dashboard(props) {
             <Card className="card-chart">
               <CardHeader>
                 <Row>
-                  <Col className="text-left" sm="6">
+                  <Col className="text-left">
                     <h5 className="card-category">{bigChartState.toUpperCase()}</h5>
-                    <CardTitle tag="h2">Last Weeks</CardTitle>
+                    <CardTitle tag="h2">LAST {timeInterval.toUpperCase()}S</CardTitle>
                   </Col>
-                  <Col sm="6">
-                    <ButtonGroup
-                      className="btn-group-toggle float-right"
-                      data-toggle="buttons"
-                    >
-                      <Button
-                        tag="label"
-                        className={classNames("btn-simple", {
-                          active: bigChartState === "Voicetime",
-                        })}
-                        color="info"
-                        id="0"
-                        size="sm"
-                        onClick={() => setbigChartState("Voicetime")}
-                      >
-                        <span className="d-none d-sm-block d-md-block d-lg-block d-xl-block">
-                          Voicetime
-                        </span>
-                        <span className="d-block d-sm-none">
-                          <i className="tim-icons icon-single-02" />
-                        </span>
-                      </Button>
-                      <Button
-                        color="info"
-                        id="1"
-                        size="sm"
-                        tag="label"
-                        className={classNames("btn-simple", {
-                          active: bigChartState === "Mutetime",
-                        })}
-                        onClick={() => setbigChartState("Mutetime")}
-                      >
-                        <span className="d-none d-sm-block d-md-block d-lg-block d-xl-block">
-                          Mutetime
-                        </span>
-                        <span className="d-block d-sm-none">
-                          <i className="tim-icons icon-gift-2" />
-                        </span>
-                      </Button>
-                      <Button
-                        color="info"
-                        id="2"
-                        size="sm"
-                        tag="label"
-                        className={classNames("btn-simple", {
-                          active: bigChartState === "Deaftime",
-                        })}
-                        onClick={() => setbigChartState("Deaftime")}
-                      >
-                        <span className="d-none d-sm-block d-md-block d-lg-block d-xl-block">
-                          Deaftime
-                        </span>
-                        <span className="d-block d-sm-none">
-                          <i className="tim-icons icon-tap-02" />
-                        </span>
-                      </Button>
-                    </ButtonGroup>
+                  <Col sm="8">
+                    <StateButtonGroup state={timeInterval} setState={setTimeInterval} types={["day", "week", "month"]}/>
+                  </Col>
+                  <Col>
+                    <StateButtonGroup state={bigChartState} setState={setbigChartState} types={["Voicetime", "Mutetime", "Deaftime"]}/>
                   </Col>
                 </Row>
               </CardHeader>
@@ -127,6 +73,7 @@ function Dashboard(props) {
                 <div className="chart-area">
                   <LineGraph
                     database={bigChartState}
+                    timeInterval={timeInterval}
                   />
                 </div>
               </CardBody>
@@ -142,62 +89,7 @@ function Dashboard(props) {
                     <CardTitle tag="h4">Last Entries: {bigTableState.toUpperCase()}</CardTitle>
                   </Col>
                   <Col sm="6">
-                    <ButtonGroup
-                      className="btn-group-toggle float-right"
-                      data-toggle="buttons"
-                    >
-                      <Button
-                        tag="label"
-                        className={classNames("btn-simple", {
-                          active: bigTableState === "Voicetime",
-                        })}
-                        color="info"
-                        id="0"
-                        size="sm"
-                        onClick={() => setbigTableState("Voicetime")}
-                      >
-                        <span className="d-none d-sm-block d-md-block d-lg-block d-xl-block">
-                          Voicetime
-                        </span>
-                        <span className="d-block d-sm-none">
-                          <i className="tim-icons icon-single-02" />
-                        </span>
-                      </Button>
-                      <Button
-                        color="info"
-                        id="1"
-                        size="sm"
-                        tag="label"
-                        className={classNames("btn-simple", {
-                          active: bigTableState === "Mutetime",
-                        })}
-                        onClick={() => setbigTableState("Mutetime")}
-                      >
-                        <span className="d-none d-sm-block d-md-block d-lg-block d-xl-block">
-                          Mutetime
-                        </span>
-                        <span className="d-block d-sm-none">
-                          <i className="tim-icons icon-gift-2" />
-                        </span>
-                      </Button>
-                      <Button
-                        color="info"
-                        id="2"
-                        size="sm"
-                        tag="label"
-                        className={classNames("btn-simple", {
-                          active: bigTableState === "Deaftime",
-                        })}
-                        onClick={() => setbigTableState("Deaftime")}
-                      >
-                        <span className="d-none d-sm-block d-md-block d-lg-block d-xl-block">
-                          Deaftime
-                        </span>
-                        <span className="d-block d-sm-none">
-                          <i className="tim-icons icon-tap-02" />
-                        </span>
-                      </Button>
-                    </ButtonGroup>
+                    <StateButtonGroup state={bigTableState} setState={setbigTableState} types={["Voicetime", "Mutetime", "Deaftime"]}/>
                   </Col>
                 </Row>
               </CardHeader>
@@ -211,9 +103,7 @@ function Dashboard(props) {
                       <th className="text-center">Duration</th>
                     </tr>
                   </thead>
-                  <tbody>
-                    <TableData database={bigTableState}/>
-                  </tbody>
+                  <TableData database={bigTableState} avatarUrls={avatarUrls}/>
                 </Table>
               </CardBody>
             </Card>
