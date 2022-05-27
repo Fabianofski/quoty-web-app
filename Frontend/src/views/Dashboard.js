@@ -18,6 +18,7 @@
 
 import React from "react";
 import TableData from "variables/tableEntries";
+import Ranking from "variables/ranks";
 import StateButtonGroup from "components/StateButtonGroup";
 // reactstrap components
 import {
@@ -79,6 +80,11 @@ function Dashboard() {
               </CardBody>
             </Card>
           </Col>
+        </Row>
+        <Row>
+          <Ranking avatarUrls={avatarUrls} database = {"Voicetime"}/>
+          <Ranking avatarUrls={avatarUrls} database = {"Mutetime"}/>
+          <Ranking avatarUrls={avatarUrls} database = {"Deaftime"}/>
         </Row>
         <Row>
           <Col>

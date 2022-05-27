@@ -50,7 +50,7 @@ app.get("/api/Ranking", (req, res) => {
   const database = req.query.database || "Voicetime";
   const numberOfEntries = parseInt(req.query.numberOfEntries) ? parseInt(req.query.numberOfEntries) : 10;
 
-  const query = `SELECT DISTINCT UserID, SEC_TO_TIME(SUM(TIME_TO_SEC(time))) AS Time 
+  const query = `SELECT DISTINCT UserID, Username, SEC_TO_TIME(SUM(TIME_TO_SEC(time))) AS Time 
                  FROM ${database}
                  WHERE ServerID='426358403917676546'
                  GROUP BY UserID ORDER BY time DESC
