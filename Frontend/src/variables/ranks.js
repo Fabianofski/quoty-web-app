@@ -6,7 +6,6 @@ import {
   CardBody,
   CardTitle,
   Table,
-  Row,
   Col,
 } from "reactstrap";
 
@@ -63,9 +62,26 @@ function Data({username, userID, time, index, avatarUrls}){
   return(
     <tr>
       <td>{index + 1}.<img src={url} width="30" height="30" alt="" className="discord-avatar"/>{username}</td>
-      <td className="text-center">{time}</td>
+      <td className="text-center">{formatHHmmss(time)}</td>
     </tr>
   );
+}
+
+function formatHHmmss(time){
+  let split = time.split(':');
+  const seconds = split[2];
+  const minutes = split[1];
+  let hours = split[0];
+  const days = Math.floor(hours / 24);
+  hours = hours - days * 24;
+
+  let dayStr = ''
+  if(days > 1)
+    dayStr = `${days} days, `
+  else if(days === 1)
+    dayStr = `${days} day, `
+  
+  return `${dayStr}${hours}:${minutes}:${seconds}`;
 }
 
 export default Ranking;

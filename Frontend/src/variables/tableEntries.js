@@ -39,6 +39,6 @@ function Data({username, userID, avatarUrls, start, end, duration}){
       <td className="text-center">{duration}</td>
     </tr>
   );
-  }
+}
 
 export default TableData;

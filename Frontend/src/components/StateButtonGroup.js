@@ -11,8 +11,8 @@ function StateButtonGroup({state, setState, types}){
     <ButtonGroup
       className="btn-group-toggle float-right"
       data-toggle="buttons">
-      {types.map((element) => (
-        <GroupButton state={state} setState={setState} type={element} />
+      {types.map((element, index) => (
+        <GroupButton state={state} setState={setState} type={element} key={index}/>
       ))}
     </ButtonGroup>
   );
