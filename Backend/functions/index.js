@@ -3,7 +3,8 @@ const functions = require("firebase-functions");
 const express = require("express");
 const app = express();
 const PORT = 3001; // npx kill-port 3001 (to kill process on port after firebase deploy)
-const Discord = require("discord.js");
+const Discord = require('discord.js')
+const { MessageEmbed } = require('discord.js');
 const config = require("./config.json");
 
 const bot = new Discord.Client({intents: ["GUILDS"]});
@@ -123,8 +124,31 @@ app.get("/api/getProfilePicture", (req, res) => {
   .catch(console.error);
 });
 
-app.listen(PORT, () => {
-  console.log(`Server listening on ${PORT}`);
+app.get("/api/quote", (req, res) => {
+  const authorsReq = req.query.authors;
+  const quotesReq = req.query.quotes;
+  const channelID = req.query.channelID;
+  const authors = authorsReq.substring(1).split("|")
+  const quotes = quotesReq.substring(1).split("|");
+
+  const quoteEmbed = new MessageEmbed()
+  .setColor(0x00FF00)
+  .setTitle(authors[0] + ":")
+  .setDescription("\"" + quotes[0] + "\"")
+  .setAuthor({name: "Quoty", iconURL: "https://cdn.discordapp.com/avatars/801462998468001793/a9418578fc3d1a6a79a84ee875b91ec4.webp"})
+  .setFooter({ text: new Date().toLocaleString("de-DE", {timeZone: "Europe/Berlin"})});
+
+  for (i = 1; i < authors.length; i++){
+    quoteEmbed.addFields({name: authors[i] + ":", value: "\"" + quotes[i] + "\""});
+  }
+
+  const channel = bot.channels.cache.get(channelID);
+  channel.send({ embeds: [quoteEmbed]});
+
+  res.send("Successfull!");
 });
 
+//app.listen(PORT, () => {
+//  console.log('Listening ...')
+//})
 exports.app = functions.https.onRequest(app);

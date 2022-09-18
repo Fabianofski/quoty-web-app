@@ -16,7 +16,7 @@
 
 */
 import Dashboard from "views/Dashboard.js";
-import Notifications from "views/Notifications.js";
+import Quotes from "views/Quotes.js";
 import TableList from "views/TableList.js";
 import Typography from "views/Typography.js";
 import UserProfile from "views/UserProfile.js";
@@ -39,11 +39,11 @@ var routes = [
     layout: "/admin",
   },
   {
-    path: "/notifications",
-    name: "Notifications",
+    path: "/quotes",
+    name: "Quotes",
     rtlName: "إخطارات",
     icon: "tim-icons icon-bell-55",
-    component: Notifications,
+    component: Quotes,
     layout: "/admin",
   },
   {
