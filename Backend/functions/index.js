@@ -8,23 +8,18 @@ const { MessageEmbed } = require("discord.js");
 const config = require("./config.json");
 
 const bot = new Discord.Client({ intents: ["GUILDS"] });
-bot.login(config.BOT_TOKEN);
+bot.login(config.BOT_TOKEN).then(r => {});
 
 const cors = require("cors")({ origin: true });
 app.use(cors);
 
-const mysql = require("mysql2");
+const mysql = require("mysql");
 
-const con = mysql.createConnection({
-  host: "139.144.180.206",
-  user: "admin",
-  password: "5U4YW*d$Gb#D&JRX",
-  database: "ChannelStatistics",
-});
-
-con.connect(function (err) {
-  if (err) throw err;
-  console.log("Connected!");
+const con = mysql.createPool({
+  host: config.SQL_HOST,
+  user: config.SQL_USER,
+  password:config.SQL_PASSWORD,
+  database: config.SQL_DATABASE
 });
 
 function performQuery(query, callback) {
@@ -68,7 +63,7 @@ app.get("/api/lineGraphData", (req, res) => {
     ? parseInt(req.query.numberOfData)
     : 6;
 
-  timeInterval = timeInterval == "day" ? "DATE" : timeInterval;
+  timeInterval = timeInterval === "day" ? "DATE" : timeInterval;
   const query = `SELECT ${timeInterval}(Start) AS Time, SEC_TO_TIME(sum(TIME_TO_SEC(time))) AS Duration 
                FROM ${database}
                WHERE ServerID='426358403917676546'
@@ -88,12 +83,12 @@ app.get("/api/lineGraphData", (req, res) => {
 });
 
 function format(date, timeInterval) {
-  if (timeInterval == "month")
+  if (timeInterval === "month")
     return Moment()
       .month(date - 1)
       .format("MMM");
-  else if (timeInterval == "week") return "KW " + date;
-  else if (timeInterval == "DATE") return Moment(date).format("DD.MM");
+  else if (timeInterval === "week") return "KW " + date;
+  else if (timeInterval === "DATE") return Moment(date).format("DD.MM");
 }
 
 app.get("/api/getAllUsers", (req, res) => {
